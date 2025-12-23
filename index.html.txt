@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Scan QR</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- QR Scanner Library -->
+  <script src="https://unpkg.com/html5-qrcode"></script>
+
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: black;
+      color: white;
+      font-family: Arial, sans-serif;
+      text-align: center;
+    }
+    #reader {
+      width: 100%;
+      height: 100vh;
+    }
+  </style>
+</head>
+<body>
+
+<div id="reader"></div>
+
+<script>
+  const BOT_USERNAME = "Pal_flour_mill_bot"; // WITHOUT @
+
+  function onScanSuccess(decodedText) {
+    html5QrcodeScanner.clear().then(() => {
+      window.location.href =
+        `https://t.me/${BOT_USERNAME}?start=acc_${encodeURIComponent(decodedText)}`;
+    });
+  }
+
+  function onScanError(error) {
+    // ignore scan errors
+  }
+
+  const html5QrcodeScanner = new Html5QrcodeScanner(
+    "reader",
+    { fps: 10, qrbox: { width: 250, height: 250 } },
+    false
+  );
+
+  html5QrcodeScanner.render(onScanSuccess, onScanError);
+</script>
+
+</body>
+</html>
